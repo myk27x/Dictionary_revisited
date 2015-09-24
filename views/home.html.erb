@@ -30,6 +30,8 @@
     <div>
       Don't see a word here? <a href="/add">ADD</a> it to make this site better!
     </div>
-    <p> <%= return_dict %> </p>
+    <% Definition.all.each do |value|%>
+    <p> <%= value.word %> = <%= value.meaning %> </p>
+    <%end%>
   </body>
 </html>
