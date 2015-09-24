@@ -2,11 +2,13 @@ require 'active_record'
 require 'sqlite3'
 
 ActiveRecord::Base.establish_connection(
-  adapter: "sqlite3",
-  database: File.dirname(__FILE__) + "/definitions.db"
-  )
+adapter: "sqlite3",
+database: File.dirname(__FILE__) + "/definitions.db"
+)
 
 class Definition < ActiveRecord::Base
+  validates :word, presence: true
+  validates :meaning, presence: true
 end
 
 
@@ -18,18 +20,7 @@ set :port, 3027
 
 Tilt.register Tilt::ERBTemplate, 'html.erb'
 
-def return_dict
-  Definition.all.each do |value|
-    @words = value.word
-    @meanings = value.meaning
-    puts "#{@words} = #{@meanings}"
-  end
-end
-
 get "/" do
-
-  # return "words = meanings" from definitions table
-
   erb :home
 end
 
@@ -38,9 +29,16 @@ get "/add" do
 end
 
 post "/save" do
-  Definition.create(word: params["word"], meaning: params["meaning"])
+  add_word = Definition.create(word: params["word"], meaning: params["meaning"]).valid?
+  if add_word == true
+    redirect '/'
+  else
+    redirect '/error'
+  end
+end
 
-  redirect '/'
+get '/error' do
+  erb :error
 end
 
 get "/search" do

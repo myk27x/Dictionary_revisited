@@ -1,10 +1,29 @@
 <html>
-<head>
-  <title>...and ye shall receive.</title>
-</head>
-<body>
-<a href="/">BACK HOME</a>
-  <h3>I've found your words!</h3>
-  <%= @definition %>
-</body>
+  <head>
+    <title>...and ye shall receive.</title>
+    <style>
+    a:link{
+      text-decoration: none;
+      color: blue;
+    }
+    a:visited {
+      color: blue;
+    }
+    h3 {
+      margin-top: 100px;
+      text-align: center;
+    }
+    h2 {
+      text-align: center;
+    }
+    h4 {
+      text-align: center;
+    }
+    </style>
+  </head>
+  <body>
+    <h3>I've found your words!</h3>
+    <h2> <%= @definition %> </h2>
+    <h4><a href="/">BACK HOME</a></h4>
+  </body>
 </html>
